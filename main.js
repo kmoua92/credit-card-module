@@ -28,12 +28,12 @@ class CreditCard {
       }
     }
 
-    return cardType;
+    return cardType || false;
   }
 
   hasValidNumber() {
     const stringifiedNum = this.number.toString();
-    const hasValidLength = !!this.cardType && cards[this.cardType].validLengths.indexOf(stringifiedNum.length) !== -1;
+    const hasValidLength = this.cardType && cards[this.cardType].validLengths.indexOf(stringifiedNum.length) !== -1;
 
     let numbersSummed = 0;
     // double every other number from right to left
@@ -55,7 +55,7 @@ class CreditCard {
   }
 
   hasValidCVV() {
-    return !!this.cardType && this.cvv.toString().length === cards[this.cardType].cvvLength;
+    return this.cardType && this.cvv.toString().length === cards[this.cardType].cvvLength;
   }
 
   isNotExpired() {
@@ -93,7 +93,7 @@ class CreditCard {
       isNotExpired: this.isNotExpired()
     };
 
-    const isValid = !!this.getCardType() && this.hasValidNumber() && this.hasValidCVV() && this.isNotExpired();
+    const isValid = this.getCardType() && this.hasValidNumber() && this.hasValidCVV() && this.isNotExpired();
 
     return [isValid, validation];
   }
